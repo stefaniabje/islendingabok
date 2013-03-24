@@ -1,7 +1,7 @@
 islendingabok: Library for Islendingabok API
 ============================================
 
-islendingabok is an [WTFPL](http://www.wtfpl.net/about/) Licensed client library for [Islendingabok](http://islendingabok.is/) API ([official documentation](http://islendingaapp.is/api/)), written in Python. 
+islendingabok is a [WTFPL](http://www.wtfpl.net/about/) Licensed client library for [Islendingabok](http://islendingabok.is/) API ([official documentation](http://islendingaapp.is/api/)), written in Python. 
 
 
 The API is supposed to return json but most of the time it does not (e.g. the keys are not double quoted, missing commas between list items, stray double quotes, etc.). This results in an unreliable API which this client library tries its best to fix. However, some errors still need to be fixed on the server end.
