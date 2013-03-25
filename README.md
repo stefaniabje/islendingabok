@@ -4,9 +4,8 @@ islendingabok: Library for Islendingabok API
 islendingabok is a [WTFPL](http://www.wtfpl.net/about/) Licensed client library for the [Islendingabok](http://islendingabok.is/) API ([official documentation](http://islendingaapp.is/api/)), written in Python. 
 
 
-The API is supposed to return json but most of the time it does not (e.g. the keys are not double quoted, missing commas between list items, stray double quotes, etc.). This results in an unreliable API which this client library tries its best to fix. However, some errors still need to be fixed on the server end.
-
 All endpoints have been implemented, except the 'whois' endpoint, which is still a mystery and we haven't figured out how it works exactly. We've tried using the session id as well as the session user id as 'stranger' but neither gives a usable individual's id of the stranger.
+The endpoint 'find' does not seem to work for searching by more than the year of the date of birth.
 
 
 Example
