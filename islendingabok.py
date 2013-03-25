@@ -2,7 +2,6 @@
 #encoding: utf-8
 
 import requests
-import demjson
 
 
 class APIError(Exception):
@@ -75,13 +74,11 @@ class IslendingabokAPI(object):
 		parameters["session"] = self.session_id
 
 		response = self.api_response(endpoint, **parameters)
-
-		fixed_response = response.text.replace('"state:', '", state:').replace('<br>', ' ').replace('}{', '}, {')
-
+		
 		try:
-			return demjson.decode(fixed_response)
-		except demjson.JSONDecodeError:
-			raise APIError(fixed_response.encode("utf-8"))
+			return response.json()
+		except ValueError:
+			raise APIError(response.text.encode('utf-8'))
 
 
 	def api_response(self, endpoint, **parameters):
@@ -90,5 +87,9 @@ class IslendingabokAPI(object):
 
 
 
-
+# /* This program is free software. It comes without any warranty, to
+#      * the extent permitted by applicable law. You can redistribute it
+#      * and/or modify it under the terms of the Do What The Fuck You Want
+#      * To Public License, Version 2, as published by Sam Hocevar. See
+#      * http://www.wtfpl.net/ for more details. */
 

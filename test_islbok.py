@@ -7,14 +7,14 @@ import argparse
 
 def main(username, password):
 	api = IslendingabokAPI(username, password)
-
 	user_info = api.me()
+	
 	print user_info['name']
 
 	results = api.find(u'Vigdís Finnbogadóttir')
+
 	for person_info in results:
-		print person_info['name'], person_info['dob']
-	
+		print person_info['name'], person_info['dob'], person_info['id']
 
 
 def parse_arguments():
@@ -22,7 +22,7 @@ def parse_arguments():
 	parser.add_argument('username', 
 		help='username on Islendingabok')
 	parser.add_argument('password',
-	                   help='password on Islendingabok')
+	    help='password on Islendingabok')
 
 	return parser.parse_args()
 

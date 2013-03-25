@@ -1,2 +1,1 @@
 requests>=1.1.0
-demjson>=1.6
