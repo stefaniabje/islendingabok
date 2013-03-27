@@ -8,6 +8,10 @@ class APIError(Exception):
 	pass
 
 
+class ClientError(Exception):
+	pass
+
+
 class IslendingabokAPI(object):
 	API_PATH = "http://www.islendingabok.is/ib_app/"
 
@@ -32,22 +36,29 @@ class IslendingabokAPI(object):
 		return self.call_api("get", id=person_id)
 
 	def find(self, name=None, birth_year=None, birth_month=None, birth_day=None):
-		date_of_birth = self._parse_date_of_birth(birth_year, birth_month, birth_day)
-
 		if name:
 			name = name.encode("iso-8859-1")
+			
+		date_of_birth = self._parse_date_of_birth(name, birth_year, birth_month, birth_day)
 
 		return self.call_api("find", name=name, dob=date_of_birth)
 
-	def _parse_date_of_birth(self, birth_year=None, birth_month=None, birth_day=None):
+	def _parse_date_of_birth(self, name=None, birth_year=None, birth_month=None, birth_day=None):
 		date_of_birth = None
+
+		seperator = "." if name else ""
+
+		if not name and (not birth_day or not birth_month):
+			raise ClientError("Missing part of date of birth.")
 
 		if birth_year:
 			date_of_birth = str(birth_year)
+
 			if birth_month:
-				date_of_birth += "%02d" % birth_month
+				date_of_birth = ("%02d" % birth_month) + seperator + date_of_birth
+
 				if birth_day:
-					date_of_birth += str(birth_day)
+					date_of_birth = ("%02d" % birth_day) + seperator + date_of_birth					
 
 		return date_of_birth
 
@@ -74,7 +85,7 @@ class IslendingabokAPI(object):
 		parameters["session"] = self.session_id
 
 		response = self.api_response(endpoint, **parameters)
-		
+
 		try:
 			return response.json()
 		except ValueError:

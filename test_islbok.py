@@ -5,6 +5,7 @@
 from islendingabok import IslendingabokAPI
 import argparse
 
+
 def main(username, password):
 	api = IslendingabokAPI(username, password)
 	user_info = api.me()
@@ -15,6 +16,15 @@ def main(username, password):
 
 	for person_info in results:
 		print person_info['name'], person_info['dob'], person_info['id']
+
+	oli_stef = api.find(u'Ólafur Indriði Stefánsson', 1973, 07)
+	
+	oli_stef_id = oli_stef[0]["id"]
+
+	siblings_of_oli_stef = api.siblings(oli_stef_id)
+
+	for sibling in siblings_of_oli_stef:
+		print sibling["name"]
 
 
 def parse_arguments():
